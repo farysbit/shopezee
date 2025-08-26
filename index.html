@@ -1,10 +1,45 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My First Website</title>
+    <title>Order Submission</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background-color: #f4f4f4;
+      }
+      h1 {
+        color: #333;
+      }
+      form {
+        background: #fff;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      }
+      textarea {
+        width: 100%;
+        height: 150px;
+        margin-bottom: 10px;
+        padding: 10px;
+        font-size: 16px;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+      }
+    </style>
   </head>
   <body>
-    <h1>Hello from Faris!</h1>
-    <p>This is my first website hosted from my phone.</p>
+    <h1>Submit Your Order</h1>
+    <form action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
+      <label for="items">List your items below:</label><br>
+      <textarea id="items" name="items" placeholder="e.g. 2x Rice, 1x Oil, 3x Soap" required></textarea><br>
+      <button type="submit">Submit Order</button>
+    </form>
   </body>
 </html>
