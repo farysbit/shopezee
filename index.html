@@ -3,16 +3,72 @@
 <head>
   <title>Fruit & Veggie Order</title>
   <style>
-    body { font-family: sans-serif; padding: 10px; }
-    .product { display: flex; align-items: center; margin-bottom: 15px; }
-    .product img { width: 80px; margin-right: 10px; }
-    .product input { width: 60px; margin-left: 10px; }
-    #summary { font-weight: bold; margin-top: 20px; }
+    body {
+      font-family: sans-serif;
+      padding: 15px;
+      background-color: #f9f9f9;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .product {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .product img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+    .product span {
+      flex: 1;
+    }
+    .product input {
+      width: 60px;
+      padding: 5px;
+      font-size: 16px;
+    }
+    .info {
+      margin-top: 20px;
+    }
+    .info input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    #summary {
+      font-weight: bold;
+      margin-top: 20px;
+      background: #e0ffe0;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      margin-top: 15px;
+    }
   </style>
 </head>
 <body>
 
-  <h2>🛒 Select Your Items</h2>
+  <h2>🛒 Order Fruits & Vegetables</h2>
 
   <div class="product">
     <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.jpg" alt="Apple">
@@ -32,24 +88,54 @@
     <input type="number" min="0" value="0" onchange="updateTotal()">
   </div>
 
-  <p id="summary">🧾 Total: ₹0</p>
+  <div class="product">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/2/25/Onion_on_white.jpg" alt="Onion">
+    <span>Onion – ₹25/kg</span>
+    <input type="number" min="0" value="0" onchange="updateTotal()">
+  </div>
+
+  <div class="info">
+    <input type="text" id="name" placeholder="Your Name" required>
+    <input type="tel" id="phone" placeholder="Phone Number" required>
+  </div>
+
+  <div id="summary">🧾 Total: ₹0 | Items: None</div>
+
+  <button onclick="submitOrder()">Place Order</button>
 
   <script>
+    const prices = [30, 20, 10, 25]; // Apple, Tomato, Banana, Onion
+
     function updateTotal() {
-      const prices = [30, 20, 10]; // Apple, Tomato, Banana
-      const inputs = document.querySelectorAll('input[type="number"]');
+      const inputs = document.querySelectorAll('.product input');
+      const labels = document.querySelectorAll('.product span');
       let total = 0;
       let items = [];
 
       inputs.forEach((input, i) => {
-        const qty = parseInt(input.value);
+        const qty = parseFloat(input.value);
         if (qty > 0) {
           total += qty * prices[i];
-          items.push(`${qty} kg of ${document.querySelectorAll('.product span')[i].textContent.split('–')[0].trim()}`);
+          const name = labels[i].textContent.split('–')[0].trim();
+          items.push(`${qty} kg ${name}`);
         }
       });
 
-      document.getElementById('summary').textContent = `🧾 Total: ₹${total} | Items: ${items.join(', ') || 'None'}`;
+      document.getElementById('summary').textContent =
+        `🧾 Total: ₹${total} | Items: ${items.join(', ') || 'None'}`;
+    }
+
+    function submitOrder() {
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const summary = document.getElementById('summary').textContent;
+
+      if (!name || !phone) {
+        alert("Please enter your name and phone number.");
+        return;
+      }
+
+      alert(`✅ Thank you, ${name}! Your order has been placed.\n\n${summary}`);
     }
   </script>
 
