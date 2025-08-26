@@ -1,51 +1,57 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Order Submission</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        padding: 20px;
-        background-color: #f4f4f4;
-      }
-      h1 {
-        color: #333;
-      }
-      form {
-        background: #fff;
-        padding: 15px;
-        border-radius: 5px;
-        box-shadow: 0 0 5px rgba(0,0,0,0.1);
-      }
-      textarea {
-        width: 100%;
-        height: 180px;
-        margin-bottom: 10px;
-        padding: 10px;
-        font-size: 16px;
-      }
-      button {
-        padding: 10px 20px;
-        font-size: 16px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 4px;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Submit Your Order</h1>
-    <form action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
-      <label for="items">List your items below:</label><br>
-      <textarea id="items" name="items" required>
-1x Lorem Rice – 5kg
-2x Ipsum Oil – 1L
-3x Dolor Soap – 100g
-1x Sit Sugar – 2kg
-5x Amet Biscuits – assorted
-      </textarea><br>
-      <button type="submit">Submit Order</button>
-    </form>
-  </body>
+<head>
+  <title>Fruit & Veggie Order</title>
+  <style>
+    body { font-family: sans-serif; padding: 10px; }
+    .product { display: flex; align-items: center; margin-bottom: 15px; }
+    .product img { width: 80px; margin-right: 10px; }
+    .product input { width: 60px; margin-left: 10px; }
+    #summary { font-weight: bold; margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+  <h2>🛒 Select Your Items</h2>
+
+  <div class="product">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.jpg" alt="Apple">
+    <span>Apple – ₹30/kg</span>
+    <input type="number" min="0" value="0" onchange="updateTotal()">
+  </div>
+
+  <div class="product">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Tomato_je.jpg" alt="Tomato">
+    <span>Tomato – ₹20/kg</span>
+    <input type="number" min="0" value="0" onchange="updateTotal()">
+  </div>
+
+  <div class="product">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg" alt="Banana">
+    <span>Banana – ₹10/kg</span>
+    <input type="number" min="0" value="0" onchange="updateTotal()">
+  </div>
+
+  <p id="summary">🧾 Total: ₹0</p>
+
+  <script>
+    function updateTotal() {
+      const prices = [30, 20, 10]; // Apple, Tomato, Banana
+      const inputs = document.querySelectorAll('input[type="number"]');
+      let total = 0;
+      let items = [];
+
+      inputs.forEach((input, i) => {
+        const qty = parseInt(input.value);
+        if (qty > 0) {
+          total += qty * prices[i];
+          items.push(`${qty} kg of ${document.querySelectorAll('.product span')[i].textContent.split('–')[0].trim()}`);
+        }
+      });
+
+      document.getElementById('summary').textContent = `🧾 Total: ₹${total} | Items: ${items.join(', ') || 'None'}`;
+    }
+  </script>
+
+</body>
 </html>
